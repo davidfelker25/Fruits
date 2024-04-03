@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Déli gyümölcsök</title>
+    <style>
+        body {
+            background-image: url('bg.jpg');
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: black;
+        }
+        #content {
+            text-align: center;
+            margin-top: 50px;
+        }
+        img {
+            max-width: 300px;
+            height: auto;
+            margin-top: 20px;
+        }
+        #background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.5);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+
+<div id="background-overlay"></div>
+
+<div id="content">
+    <h1>Déli gyümölcsök</h1>
+    <p style="color: black;">Neked melyik a kedvenced?</p>
+    <select id="gyumolcsLista" onchange="showInfo()">
+        <option value="" disabled selected>Válassz egy gyümölcsöt...</option>
+    </select>
+    <div id="info" style="display: none;">
+        <h2 id="gyumolcsNev"></h2>
+        <img id="gyumolcsKep" src="" alt="Gyümölcs kép">
+        <p id="gyumolcsLeiras"></p>
+    </div>
+</div>
+
+<script src="data_fruits.js"></script>
+
+<script>
+    const gyumolcsLista = document.getElementById("gyumolcsLista");
+    fruits.forEach(fruit => {
+        const option = document.createElement("option");
+        option.value = fruit.id;
+        option.text = fruit.name;
+        gyumolcsLista.appendChild(option);
+    });
+
+    function showInfo() {
+        var gyumolcsLista = document.getElementById("gyumolcsLista");
+        var selectedGyumolcsId = parseInt(gyumolcsLista.value);
+
+        var infoDiv = document.getElementById("info");
+        var gyumolcsNev = document.getElementById("gyumolcsNev");
+        var gyumolcsKep = document.getElementById("gyumolcsKep");
+        var gyumolcsLeiras = document.getElementById("gyumolcsLeiras");
+
+        if (selectedGyumolcsId) {
+            infoDiv.style.display = "block";
+            const selectedFruit = fruits.find(fruit => fruit.id === selectedGyumolcsId);
+            gyumolcsNev.innerText = selectedFruit.name;
+            gyumolcsKep.src = selectedFruit.image;
+            gyumolcsLeiras.innerText = selectedFruit.descr;
+        } else {
+            infoDiv.style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>
+
